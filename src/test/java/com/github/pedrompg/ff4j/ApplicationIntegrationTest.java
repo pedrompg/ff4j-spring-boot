@@ -66,7 +66,7 @@ class ApplicationIntegrationTest {
   }
 
   @Test
-  void failsOnCallingCreateSchemaWithPlainJdbcTwice() {
+  void doesNotFailOnCallingCreateSchemaWithPlainJdbcTwice() {
     final FF4j ff4j = plainJdbc(dataSource());
     ff4j.createSchema(); // first calls is successful
     ff4j.createSchema(); // no error
