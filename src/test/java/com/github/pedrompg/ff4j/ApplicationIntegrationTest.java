@@ -56,16 +56,6 @@ class ApplicationIntegrationTest {
   }
 
   @Test
-  void createsNoSchemaWithSpringJdbc() {
-    final FF4j ff4j = ff4jSpringJdbc(dataSource());
-
-    Assertions.assertThatThrownBy(ff4j::getFeatures)
-        .isInstanceOf(BadSqlGrammarException.class)
-        .hasRootCauseMessage(
-            "ERROR: relation \"ff4j_features\" does not exist\n" + "  Position: 71");
-  }
-
-  @Test
   void failsOnCallingCreateSchemaWithSpringJdbcTwice() {
     final FF4j ff4j = ff4jSpringJdbc(dataSource());
     ff4j.createSchema(); // first call is successful
@@ -76,19 +66,9 @@ class ApplicationIntegrationTest {
   }
 
   @Test
-  void createsNoSchemaWithPlainJdbc() {
-    final FF4j ff4j = plainJdbc(dataSource());
-
-    Assertions.assertThatThrownBy(ff4j::getFeatures)
-        .isInstanceOf(org.ff4j.exception.FeatureAccessException.class)
-        .hasRootCauseMessage(
-            "ERROR: relation \"ff4j_features\" does not exist\n" + "  Position: 71");
-  }
-
-  @Test
   void failsOnCallingCreateSchemaWithPlainJdbcTwice() {
     final FF4j ff4j = plainJdbc(dataSource());
-    ff4j.createSchema();
+    ff4j.createSchema(); // first calls is successful
     ff4j.createSchema(); // no error
   }
 }
